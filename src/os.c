@@ -211,6 +211,7 @@ static void read_config(const char * path) {
 #endif
 		strcat(ld_processes.path[i], proc);
 	}
+	
 }
 
 int main(int argc, char * argv[]) {

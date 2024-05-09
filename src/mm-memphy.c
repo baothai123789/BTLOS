@@ -151,7 +151,6 @@ int MEMPHY_get_freefp(struct memphy_struct *mp, int *retfpn)
     * No garbage collector acting then it not been released
     */
    free(fp);
-
    return 0;
 }
 
@@ -160,8 +159,14 @@ int MEMPHY_dump(struct memphy_struct * mp)
     /*TODO dump memphy contnt mp->storage 
      *     for tracing the memory content
      */
-
-    return 0;
+    // pthread_mutex_lock(&mem_lock);
+   printf("Memory Dump-----\n");
+   for (int i = 0; i < mp->maxsz; i++)
+      if (mp->storage[i] != 0)
+         printf("Index %d: %d\n", i, mp->storage[i]);
+   printf("-----End dump\n");
+   // pthread_mutex_unlock(&mem_lock);
+   return 0;
 }
 
 int MEMPHY_put_freefp(struct memphy_struct *mp, int fpn)
