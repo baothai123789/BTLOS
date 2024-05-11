@@ -19,6 +19,7 @@
 
 #include "mm.h"
 #include <stdlib.h>
+#include<stdio.h>
 #define GET_TAG(tlb_page) GETVAL(tlb_page, GENMASK(8, 0), 0)
 #define GET_PID(tlb_page) GETVAL(tlb_page, GENMASK(29, 9), 9)
 #define GET_VALID(tlb_page) GETVAL(tlb_page, BIT(30), 30)
@@ -74,7 +75,7 @@ int tlb_cache_read(struct memphy_struct * mp, int pid, int pgnum, BYTE *value)
    int index = pgnum%8;
    int tag = pgnum/8;
    uint32_t tlb_pg = tlb[index][0];
-   if(tlb_pg&&BIT(30)){
+   if(tlb_pg&BIT(30)){
       int tag_pg = GET_TAG(tlb_pg);
       int pid_pg = GET_PID(tlb_pg);
       if(tag==tag_pg&&pid==pid_pg){
@@ -83,6 +84,7 @@ int tlb_cache_read(struct memphy_struct * mp, int pid, int pgnum, BYTE *value)
       }
       return -1;
    }
+   return -1;
 }
 
 /*

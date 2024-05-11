@@ -119,6 +119,7 @@ int __write(struct pcb_t *caller, int vmaid, int rgid, int offset, BYTE value);
 int init_mm(struct mm_struct *mm, struct pcb_t *caller);
 
 /* CPUTLB prototypes */
+int check_if_in_freerg_list(struct pcb_t *caller, int vmaid, struct vm_rg_struct *currg);
 int tlb_change_all_page_tables_of(struct pcb_t *proc,  struct memphy_struct * mp);
 int tlb_flush_tlb_of(struct pcb_t *proc, struct memphy_struct * mp);
 int tlballoc(struct pcb_t *proc, uint32_t size, uint32_t reg_index);
@@ -166,4 +167,10 @@ int print_list_vma(struct vm_area_struct *rg);
 
 int print_list_pgn(struct pgn_t *ip);
 int print_pgtbl(struct pcb_t *ip, uint32_t start, uint32_t end);
+
+#ifdef CPU_TLB
+int tlb_cache_read(struct memphy_struct *mp, int pid, int pgnum, BYTE *value);
+int tlb_cache_write(struct memphy_struct *mp, int pid, int pgnum, BYTE value);
+int tlb_clear_tlb_entry(struct memphy_struct *mp, int pid, int pgnum);
+#endif
 #endif

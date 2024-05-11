@@ -157,7 +157,6 @@ int tlbwrite(struct pcb_t *proc, BYTE data,
   int addr = region->rg_start + offset;
   int page = PAGING_PGN(addr);
   frmnum = PAGING_FPN(page);
-  // printf("pid: %d page: %d farme: %d 2222222222222222222222222222222\n", proc->pid, page, frmnum);
   tlb_cache_write(proc->tlb, proc->pid, page, frmnum);
 
 #ifdef IODUMP
